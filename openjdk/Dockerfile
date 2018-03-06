@@ -1,7 +1,7 @@
 ###
 ### this Dockerfile is an example representing one variant of this image; please see https://github.com/circleci-public/circleci-dockerfiles for a complete list of Dockerfiles for each tag/variant of this image
 ###
-FROM circleci/openjdk:8u151-jdk-stretch
+FROM circleci/openjdk:9.0.1-11-jdk-sid
 
 # install java 8
 #

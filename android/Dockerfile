@@ -7,7 +7,7 @@ LABEL maintainer="marc@circleci.com"
 
 # Initial Command run as `root`.
 
-ADD bin/circle-android /bin/circle-android
+ADD https://raw.githubusercontent.com/circleci/circleci-images/master/android/bin/circle-android /bin/circle-android
 
 # Skip the first line of the Dockerfile template (FROM ${BASE})
 
@@ -173,4 +173,4 @@ RUN sdkmanager \
   "build-tools;27.0.2" \
   "build-tools;27.0.3"
 
-RUN sdkmanager "platforms;android-27"
+RUN sdkmanager "platforms;android-23"
