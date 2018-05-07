@@ -5,7 +5,7 @@
 # this Dockerfile is an example representing one variant of this image; please see https://github.com/circleci-public/circleci-dockerfiles for a complete list of Dockerfiles for each tag/variant of this image
 #
 
-FROM circleci/python:2.7.14-stretch
+FROM circleci/python:3.7.0b4
 
 # node installations command expect to run as root
 USER root

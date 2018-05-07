@@ -5,7 +5,7 @@
 # this Dockerfile is an example representing one variant of this image; please see https://github.com/circleci-public/circleci-dockerfiles for a complete list of Dockerfiles for each tag/variant of this image
 #
 
-FROM circleci/rust:1.25.0-stretch
+FROM circleci/rust:1.25.0-jessie
 
 # node installations command expect to run as root
 USER root

@@ -5,7 +5,7 @@
 # this Dockerfile is an example representing one variant of this image; please see https://github.com/circleci-public/circleci-dockerfiles for a complete list of Dockerfiles for each tag/variant of this image
 #
 
-FROM circleci/openjdk:10-ea-46-jdk-experimental
+FROM circleci/openjdk:8u171-jdk-stretch
 
 # node installations command expect to run as root
 USER root
