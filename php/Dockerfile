@@ -1,7 +1,7 @@
 ###
 ### this Dockerfile is an example representing one variant of this image; please see https://github.com/circleci-public/circleci-dockerfiles for a complete list of Dockerfiles for each tag/variant of this image
 ###
-FROM php:7.2.5-apache-stretch
+FROM php:7.2.5-cli-stretch
 
 # make Apt non-interactive
 RUN echo 'APT::Get::Assume-Yes "true";' > /etc/apt/apt.conf.d/90circleci \
