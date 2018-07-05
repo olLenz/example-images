@@ -177,4 +177,4 @@ RUN sdkmanager \
   "build-tools;27.0.3" \
   "build-tools;28.0.0"
 
-RUN sdkmanager "platforms;android-27"
+RUN sdkmanager "platforms;android-23"
