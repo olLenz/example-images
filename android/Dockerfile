@@ -3,7 +3,7 @@
 ### please see https://github.com/circleci-public/circleci-dockerfiles
 ### for a complete list of Dockerfiles for each tag/variant of this image
 #
-FROM openjdk:8-jdk
+FROM openjdk:8-jdk-slim
 
 LABEL maintainer="marc@circleci.com"
 
@@ -106,7 +106,9 @@ RUN sudo apt-get update -qqy && sudo apt-get install -qqy \
         apt-transport-https \
         lsb-release
 
-RUN sudo easy_install -U pip && \
+RUN sudo apt-get install gcc-multilib && \
+    sudo easy_install -U pip && \
+    sudo pip uninstall crcmod && \
     sudo pip install -U crcmod
 
 RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
@@ -118,13 +120,15 @@ RUN sudo apt-get update && sudo apt-get install -y google-cloud-sdk && \
     gcloud config set component_manager/disable_update_check true
 
 ARG sdk_version=sdk-tools-linux-3859397.zip
+ARG ndk_version=android-ndk-r17b-linux-x86_64.zip
 ARG android_home=/opt/android/sdk
+ARG android_ndk_home=/opt/android/ndk
 
 # SHA-256 444e22ce8ca0f67353bda4b85175ed3731cae3ffa695ca18119cbacef1c1bea0
 
 RUN sudo apt-get update && \
     sudo apt-get install --yes \
-        xvfb gcc-multilib lib32z1 lib32stdc++6 build-essential \
+        xvfb lib32z1 lib32stdc++6 build-essential \
         libcurl4-openssl-dev libglu1-mesa libxi-dev libxmu-dev \
         libglu1-mesa-dev
 
@@ -146,8 +150,16 @@ RUN sudo mkdir -p ${android_home} && \
     unzip -q /tmp/${sdk_version} -d ${android_home} && \
     rm /tmp/${sdk_version}
 
+# Download and install Android NDK
+RUN sudo mkdir -p ${android_ndk_home} && \
+    sudo chown -R circleci:circleci ${android_ndk_home} && \
+    curl --silent --show-error --location --fail --retry 3 --output  /tmp/${ndk_version} https://dl.google.com/android/repository/${ndk_version} && \
+    unzip -q /tmp/${ndk_version} -d ${android_ndk_home} && \
+    rm /tmp/${ndk_version}
+
 # Set environmental variables
 ENV ANDROID_HOME ${android_home}
+ENV ANDROID_NDK_HOME ${android_ndk_home}
 ENV ADB_INSTALL_TIMEOUT 120
 ENV PATH=${ANDROID_HOME}/emulator:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${PATH}
 
@@ -177,7 +189,7 @@ RUN sdkmanager \
   "build-tools;27.0.3" \
   "build-tools;28.0.0"
 
-RUN sdkmanager "platforms;android-27"
+RUN sdkmanager "platforms;android-26"
 ###
 ### this Dockerfile is an example representing one variant of this image;
 ### please see https://github.com/circleci-public/circleci-dockerfiles
